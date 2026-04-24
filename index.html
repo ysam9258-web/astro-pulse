@@ -1,339 +1,211 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>AstroPulse | Name Your Star</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AstroPulse</title>
 
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: "Montserrat", system-ui, sans-serif;
-    }
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:Montserrat,sans-serif;}
 
-    body {
-      min-height: 100vh;
-      overflow-x: hidden;
-      color: #ffffff;
-      background: radial-gradient(circle at top, #1b245c 0%, #080b1f 45%, #02030a 100%);
-    }
+body{
+background: radial-gradient(circle at top,#0b0f2a,#02030a);
+color:white;
+overflow-x:hidden;
+}
 
-    .stars, .stars2 {
-      position: fixed;
-      inset: 0;
-      background-image:
-        radial-gradient(#ffffff 1px, transparent 1px),
-        radial-gradient(#8bd3ff 1px, transparent 1px);
-      background-size: 70px 70px, 120px 120px;
-      animation: drift 55s linear infinite;
-      opacity: 0.55;
-      z-index: 0;
-    }
+/* ⭐ STARS */
+.stars{
+position:fixed;
+width:100%;height:100%;
+background:url('https://www.transparenttextures.com/patterns/stardust.png');
+animation:move 100s linear infinite;
+opacity:.4;
+}
+@keyframes move{
+from{background-position:0 0;}
+to{background-position:0 -10000px;}
+}
 
-    .stars2 {
-      background-size: 140px 140px;
-      animation-duration: 90s;
-      opacity: 0.3;
-    }
+/* HEADER */
+header{
+display:flex;
+justify-content:space-between;
+padding:20px 8%;
+position:relative;
+z-index:10;
+}
+.logo{
+font-size:26px;
+font-weight:800;
+}
+.logo span{color:#7ddcff;text-shadow:0 0 15px #7ddcff;}
 
-    @keyframes drift {
-      from { transform: translateY(0); }
-      to { transform: translateY(-700px); }
-    }
+.btn{
+padding:10px 18px;
+border-radius:20px;
+background:linear-gradient(135deg,#7ddcff,#b792ff);
+border:none;
+cursor:pointer;
+font-weight:700;
+}
 
-    .glow {
-      position: fixed;
-      width: 360px;
-      height: 360px;
-      border-radius: 50%;
-      background: radial-gradient(circle, rgba(122,92,255,0.65), transparent 70%);
-      filter: blur(35px);
-      right: -80px;
-      top: 120px;
-      animation: pulse 5s ease-in-out infinite;
-      z-index: 0;
-    }
+/* HERO */
+.hero{
+text-align:center;
+padding:100px 20px;
+}
+.hero h1{
+font-size:70px;
+letter-spacing:-2px;
+}
+.hero span{
+background:linear-gradient(90deg,#7ddcff,#b792ff);
+-webkit-background-clip:text;
+color:transparent;
+}
+.hero p{
+color:#cfd6ff;
+margin:20px auto;
+max-width:500px;
+}
 
-    @keyframes pulse {
-      0%, 100% { transform: scale(1); opacity: 0.7; }
-      50% { transform: scale(1.18); opacity: 1; }
-    }
+/* PLANET */
+.planet{
+width:250px;height:250px;
+border-radius:50%;
+margin:40px auto;
+background:radial-gradient(circle,#fff,#7ddcff,#1a1f7c);
+box-shadow:0 0 60px #7ddcff;
+animation:float 4s ease-in-out infinite;
+}
+@keyframes float{
+50%{transform:translateY(-20px);}
+}
 
-    header {
-      position: relative;
-      z-index: 2;
-      padding: 24px 7%;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
+/* PRICING */
+.pricing{
+display:flex;
+justify-content:center;
+gap:20px;
+padding:60px 20px;
+flex-wrap:wrap;
+}
 
-    .logo {
-      font-size: 24px;
-      font-weight: 800;
-      letter-spacing: 1px;
-    }
+.card{
+background:rgba(255,255,255,0.05);
+padding:25px;
+border-radius:20px;
+width:260px;
+text-align:center;
+border:1px solid rgba(255,255,255,0.1);
+backdrop-filter:blur(10px);
+transition:.3s;
+}
+.card:hover{
+transform:translateY(-10px) scale(1.03);
+box-shadow:0 0 25px #7ddcff;
+}
+.price{
+font-size:28px;
+margin:10px 0;
+color:#7ddcff;
+}
 
-    .logo span {
-      color: #7ddcff;
-      text-shadow: 0 0 18px #7ddcff;
-    }
+/* REVIEWS */
+.reviews{
+padding:60px 20px;
+text-align:center;
+}
+.review-box{
+max-width:600px;
+margin:20px auto;
+padding:20px;
+background:rgba(255,255,255,0.05);
+border-radius:15px;
+}
 
-    .badge {
-      padding: 10px 16px;
-      border: 1px solid rgba(255,255,255,0.18);
-      border-radius: 999px;
-      background: rgba(255,255,255,0.08);
-      backdrop-filter: blur(12px);
-      font-size: 13px;
-      color: #c9d6ff;
-    }
-
-    main {
-      position: relative;
-      z-index: 2;
-      min-height: calc(100vh - 84px);
-      display: grid;
-      grid-template-columns: 1.1fr 0.9fr;
-      align-items: center;
-      gap: 40px;
-      padding: 30px 7% 70px;
-    }
-
-    .hero h1 {
-      font-size: clamp(42px, 8vw, 86px);
-      line-height: 0.95;
-      letter-spacing: -3px;
-      margin-bottom: 22px;
-    }
-
-    .hero h1 span {
-      background: linear-gradient(90deg, #7ddcff, #b792ff, #ffffff);
-      -webkit-background-clip: text;
-      color: transparent;
-    }
-
-    .hero p {
-      max-width: 560px;
-      color: #c8d0ff;
-      font-size: 17px;
-      line-height: 1.7;
-      margin-bottom: 28px;
-    }
-
-    .buttons {
-      display: flex;
-      gap: 14px;
-      flex-wrap: wrap;
-    }
-
-    .btn {
-      border: none;
-      padding: 15px 22px;
-      border-radius: 16px;
-      font-weight: 700;
-      cursor: pointer;
-      color: #061021;
-      background: linear-gradient(135deg, #7ddcff, #b792ff);
-      box-shadow: 0 0 35px rgba(125,220,255,0.35);
-    }
-
-    .btn.secondary {
-      color: #ffffff;
-      background: rgba(255,255,255,0.09);
-      border: 1px solid rgba(255,255,255,0.18);
-      box-shadow: none;
-    }
-
-    .visual {
-      min-height: 430px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      position: relative;
-    }
-
-    .planet {
-      width: 280px;
-      height: 280px;
-      border-radius: 50%;
-      background:
-        radial-gradient(circle at 35% 30%, #ffffff, #7ddcff 12%, #3540d4 35%, #10134b 65%, #050617 100%);
-      box-shadow:
-        0 0 70px rgba(125,220,255,0.55),
-        inset -35px -40px 55px rgba(0,0,0,0.55);
-      animation: float 4.5s ease-in-out infinite;
-      position: relative;
-    }
-
-    .planet::after {
-      content: "";
-      position: absolute;
-      width: 390px;
-      height: 90px;
-      border: 2px solid rgba(255,255,255,0.32);
-      border-radius: 50%;
-      left: 50%;
-      top: 50%;
-      transform: translate(-50%, -50%) rotate(-18deg);
-      box-shadow: 0 0 24px rgba(125,220,255,0.4);
-    }
-
-    @keyframes float {
-      0%, 100% { transform: translateY(0) rotate(0deg); }
-      50% { transform: translateY(-18px) rotate(3deg); }
-    }
-
-    .card {
-      position: absolute;
-      bottom: 12px;
-      width: min(360px, 92%);
-      padding: 22px;
-      border-radius: 26px;
-      background: rgba(255,255,255,0.09);
-      border: 1px solid rgba(255,255,255,0.16);
-      backdrop-filter: blur(18px);
-      box-shadow: 0 25px 70px rgba(0,0,0,0.35);
-    }
-
-    .card h3 {
-      margin-bottom: 10px;
-      font-size: 20px;
-    }
-
-    .card p {
-      color: #c8d0ff;
-      font-size: 14px;
-      line-height: 1.6;
-      margin-bottom: 14px;
-    }
-
-    .input-row {
-      display: flex;
-      gap: 10px;
-    }
-
-    input {
-      flex: 1;
-      padding: 13px;
-      border-radius: 14px;
-      border: 1px solid rgba(255,255,255,0.16);
-      background: rgba(0,0,0,0.25);
-      color: white;
-      outline: none;
-    }
-
-    .small-btn {
-      padding: 13px 15px;
-      border-radius: 14px;
-      border: none;
-      background: #ffffff;
-      font-weight: 800;
-      cursor: pointer;
-    }
-
-    .result {
-      margin-top: 12px;
-      color: #7ddcff;
-      font-size: 13px;
-      min-height: 18px;
-    }
-
-    @media (max-width: 850px) {
-      header {
-        padding: 20px;
-      }
-
-      main {
-        grid-template-columns: 1fr;
-        padding: 24px 20px 60px;
-        text-align: left;
-      }
-
-      .hero h1 {
-        letter-spacing: -1.5px;
-      }
-
-      .visual {
-        min-height: 430px;
-      }
-
-      .planet {
-        width: 230px;
-        height: 230px;
-      }
-
-      .planet::after {
-        width: 315px;
-      }
-
-      .badge {
-        display: none;
-      }
-    }
-  </style>
+/* FOOTER */
+footer{
+text-align:center;
+padding:30px;
+color:#aaa;
+}
+</style>
 </head>
 
 <body>
-  <div class="stars"></div>
-  <div class="stars2"></div>
-  <div class="glow"></div>
 
-  <header>
-    <div class="logo">Astro<span>Pulse</span></div>
-    <div class="badge">Premium Star Naming Experience</div>
-  </header>
+<div class="stars"></div>
 
-  <main>
-    <section class="hero">
-      <h1>Name a <span>Star</span><br>Forever.</h1>
-      <p>
-        Create a magical cosmic memory with AstroPulse. Enter a name, generate a premium star identity,
-        and experience a dreamy sky-inspired digital moment.
-      </p>
+<header>
+<div class="logo">Astro<span>Pulse</span></div>
+<button class="btn">Explore</button>
+</header>
 
-      <div class="buttons">
-        <button class="btn" onclick="scrollToCard()">Start Naming</button>
-        <button class="btn secondary">Explore Stars</button>
-      </div>
-    </section>
+<section class="hero">
+<h1>Enter The <span>Astro World</span></h1>
+<p>Name a real star and create a memory that lasts forever.</p>
 
-    <section class="visual">
-      <div class="planet"></div>
+<div class="planet"></div>
 
-      <div class="card" id="starCard">
-        <h3>Create Your Star</h3>
-        <p>Type a name and generate your first AstroPulse star preview.</p>
+<button class="btn">Start Naming</button>
+</section>
 
-        <div class="input-row">
-          <input id="nameInput" type="text" placeholder="Enter name..." />
-          <button class="small-btn" onclick="generateStar()">Go</button>
-        </div>
+<!-- PRICING -->
+<section class="pricing">
 
-        <div class="result" id="resultText"></div>
-      </div>
-    </section>
-  </main>
+<div class="card">
+<h3>Basic</h3>
+<p>Perfect for simple gifting</p>
+<div class="price">₹99</div>
+<p>✔ Star Name</p>
+<p>✔ Digital View</p>
+<button class="btn">Buy Now</button>
+</div>
 
-  <script>
-    function generateStar() {
-      const name = document.getElementById("nameInput").value.trim();
-      const result = document.getElementById("resultText");
+<div class="card">
+<h3>Premium</h3>
+<p>Most popular choice</p>
+<div class="price">₹149</div>
+<p>✔ Star Name</p>
+<p>✔ Sky Map</p>
+<p>✔ Certificate</p>
+<button class="btn">Buy Now</button>
+</div>
 
-      if (!name) {
-        result.innerText = "Please enter a name first.";
-        return;
-      }
+<div class="card">
+<h3>Ultimate</h3>
+<p>Luxury experience</p>
+<div class="price">₹199</div>
+<p>✔ Star Name</p>
+<p>✔ Premium Map</p>
+<p>✔ HD Certificate</p>
+<p>✔ Priority Access</p>
+<button class="btn">Buy Now</button>
+</div>
 
-      const starId = "AP-" + Math.floor(100000 + Math.random() * 900000);
-      result.innerText = name + "'s star has been generated • ID: " + starId;
-    }
+</section>
 
-    function scrollToCard() {
-      document.getElementById("starCard").scrollIntoView({ behavior: "smooth" });
-    }
-  </script>
+<!-- REVIEWS -->
+<section class="reviews">
+<h2>What People Say</h2>
+
+<div class="review-box">
+⭐️⭐️⭐️⭐️⭐️  
+“Amazing experience! Felt like gifting a piece of universe.”
+</div>
+
+<div class="review-box">
+⭐️⭐️⭐️⭐️⭐️  
+“Beautiful UI and concept. Totally worth it.”
+</div>
+
+</section>
+
+<footer>
+© AstroPulse | Crafted with Cosmic Energy 🌌
+</footer>
+
 </body>
 </html>
