@@ -3,528 +3,336 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Astro Pulse | Private Star Dedication</title>
+  <title>AstroPulse | Name Your Star</title>
+
   <style>
-    * { box-sizing: border-box; }
-    html { scroll-behavior: smooth; }
-    body {
+    * {
       margin: 0;
-      font-family: "Montserrat", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      color: #f5f7fa;
-      background: #05060d;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Montserrat", system-ui, sans-serif;
+    }
+
+    body {
+      min-height: 100vh;
       overflow-x: hidden;
+      color: #ffffff;
+      background: radial-gradient(circle at top, #1b245c 0%, #080b1f 45%, #02030a 100%);
     }
-    body::before {
-      content: "";
-      position: fixed;
-      inset: 0;
-      background:
-        radial-gradient(circle at 50% 20%, rgba(212,175,55,.20), transparent 24%),
-        radial-gradient(circle at 80% 10%, rgba(80,120,255,.18), transparent 26%),
-        radial-gradient(circle at 20% 80%, rgba(120,80,255,.16), transparent 28%),
-        linear-gradient(180deg, #070816, #02030a 60%, #000);
-      z-index: -3;
-    }
-    body::after {
-      content: "";
+
+    .stars, .stars2 {
       position: fixed;
       inset: 0;
       background-image:
         radial-gradient(#ffffff 1px, transparent 1px),
-        radial-gradient(#d4af37 1px, transparent 1px);
-      background-size: 56px 56px, 110px 110px;
-      background-position: 0 0, 40px 60px;
-      opacity: .18;
-      z-index: -2;
-      pointer-events: none;
+        radial-gradient(#8bd3ff 1px, transparent 1px);
+      background-size: 70px 70px, 120px 120px;
+      animation: drift 55s linear infinite;
+      opacity: 0.55;
+      z-index: 0;
     }
-    a { color: inherit; text-decoration: none; }
-    .container { width: min(1120px, 92vw); margin: 0 auto; }
-    .nav {
-      position: sticky;
-      top: 0;
-      z-index: 10;
-      backdrop-filter: blur(18px);
-      background: rgba(5,6,13,.72);
-      border-bottom: 1px solid rgba(255,255,255,.08);
+
+    .stars2 {
+      background-size: 140px 140px;
+      animation-duration: 90s;
+      opacity: 0.3;
     }
-    .navInner {
-      height: 72px;
+
+    @keyframes drift {
+      from { transform: translateY(0); }
+      to { transform: translateY(-700px); }
+    }
+
+    .glow {
+      position: fixed;
+      width: 360px;
+      height: 360px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(122,92,255,0.65), transparent 70%);
+      filter: blur(35px);
+      right: -80px;
+      top: 120px;
+      animation: pulse 5s ease-in-out infinite;
+      z-index: 0;
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); opacity: 0.7; }
+      50% { transform: scale(1.18); opacity: 1; }
+    }
+
+    header {
+      position: relative;
+      z-index: 2;
+      padding: 24px 7%;
       display: flex;
       justify-content: space-between;
       align-items: center;
     }
-    .brand {
-      letter-spacing: .22em;
+
+    .logo {
+      font-size: 24px;
       font-weight: 800;
-      color: #d4af37;
-      font-size: 15px;
+      letter-spacing: 1px;
     }
-    .navLinks {
-      display: flex;
-      gap: 22px;
-      color: rgba(245,247,250,.78);
-      font-size: 14px;
+
+    .logo span {
+      color: #7ddcff;
+      text-shadow: 0 0 18px #7ddcff;
     }
-    .btn {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      border: 1px solid rgba(212,175,55,.45);
+
+    .badge {
+      padding: 10px 16px;
+      border: 1px solid rgba(255,255,255,0.18);
       border-radius: 999px;
-      padding: 13px 20px;
-      background: linear-gradient(135deg, #f7e5a0, #d4af37 45%, #9c711e);
-      color: #08070a;
-      font-weight: 900;
-      box-shadow: 0 12px 42px rgba(212,175,55,.18);
-      cursor: pointer;
+      background: rgba(255,255,255,0.08);
+      backdrop-filter: blur(12px);
+      font-size: 13px;
+      color: #c9d6ff;
     }
+
+    main {
+      position: relative;
+      z-index: 2;
+      min-height: calc(100vh - 84px);
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      align-items: center;
+      gap: 40px;
+      padding: 30px 7% 70px;
+    }
+
+    .hero h1 {
+      font-size: clamp(42px, 8vw, 86px);
+      line-height: 0.95;
+      letter-spacing: -3px;
+      margin-bottom: 22px;
+    }
+
+    .hero h1 span {
+      background: linear-gradient(90deg, #7ddcff, #b792ff, #ffffff);
+      -webkit-background-clip: text;
+      color: transparent;
+    }
+
+    .hero p {
+      max-width: 560px;
+      color: #c8d0ff;
+      font-size: 17px;
+      line-height: 1.7;
+      margin-bottom: 28px;
+    }
+
+    .buttons {
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      border: none;
+      padding: 15px 22px;
+      border-radius: 16px;
+      font-weight: 700;
+      cursor: pointer;
+      color: #061021;
+      background: linear-gradient(135deg, #7ddcff, #b792ff);
+      box-shadow: 0 0 35px rgba(125,220,255,0.35);
+    }
+
     .btn.secondary {
-      background: rgba(255,255,255,.06);
-      color: #f5f7fa;
-      border-color: rgba(255,255,255,.16);
+      color: #ffffff;
+      background: rgba(255,255,255,0.09);
+      border: 1px solid rgba(255,255,255,0.18);
       box-shadow: none;
     }
-    .hero {
-      min-height: 88vh;
-      display: grid;
-      place-items: center;
-      text-align: center;
-      padding: 70px 0 50px;
+
+    .visual {
+      min-height: 430px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
     }
-    .badge {
-      display: inline-flex;
-      padding: 9px 14px;
-      border-radius: 999px;
-      border: 1px solid rgba(212,175,55,.36);
-      color: #d4af37;
-      background: rgba(212,175,55,.08);
-      letter-spacing: .13em;
-      text-transform: uppercase;
-      font-size: 12px;
-      font-weight: 800;
+
+    .planet {
+      width: 280px;
+      height: 280px;
+      border-radius: 50%;
+      background:
+        radial-gradient(circle at 35% 30%, #ffffff, #7ddcff 12%, #3540d4 35%, #10134b 65%, #050617 100%);
+      box-shadow:
+        0 0 70px rgba(125,220,255,0.55),
+        inset -35px -40px 55px rgba(0,0,0,0.55);
+      animation: float 4.5s ease-in-out infinite;
+      position: relative;
     }
-    h1, h2, h3 {
-      font-family: Georgia, "Times New Roman", serif;
-      margin: 0;
+
+    .planet::after {
+      content: "";
+      position: absolute;
+      width: 390px;
+      height: 90px;
+      border: 2px solid rgba(255,255,255,0.32);
+      border-radius: 50%;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%) rotate(-18deg);
+      box-shadow: 0 0 24px rgba(125,220,255,0.4);
     }
-    h1 {
-      font-size: clamp(46px, 8vw, 102px);
-      line-height: .91;
-      letter-spacing: -.055em;
-      margin: 22px 0 20px;
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0) rotate(0deg); }
+      50% { transform: translateY(-18px) rotate(3deg); }
     }
-    .gold { color: #d4af37; }
-    .lead {
-      max-width: 760px;
-      margin: 0 auto;
-      color: rgba(245,247,250,.78);
-      font-size: clamp(17px, 2vw, 22px);
-      line-height: 1.6;
-    }
-    .heroActions { display: flex; justify-content: center; gap: 14px; flex-wrap: wrap; margin-top: 32px; }
-    section { padding: 82px 0; }
-    .sectionHead { text-align: center; margin-bottom: 34px; }
-    .sectionHead h2 { font-size: clamp(32px, 5vw, 58px); letter-spacing: -.04em; }
-    .sectionHead p { color: rgba(245,247,250,.72); max-width: 680px; margin: 12px auto 0; line-height: 1.6; }
-    .grid { display: grid; grid-template-columns: repeat(12, 1fr); gap: 18px; }
+
     .card {
-      border: 1px solid rgba(255,255,255,.12);
-      background: linear-gradient(180deg, rgba(255,255,255,.09), rgba(255,255,255,.04));
-      border-radius: 28px;
-      padding: 26px;
-      box-shadow: 0 24px 80px rgba(0,0,0,.32);
+      position: absolute;
+      bottom: 12px;
+      width: min(360px, 92%);
+      padding: 22px;
+      border-radius: 26px;
+      background: rgba(255,255,255,0.09);
+      border: 1px solid rgba(255,255,255,0.16);
+      backdrop-filter: blur(18px);
+      box-shadow: 0 25px 70px rgba(0,0,0,0.35);
     }
-    .span4 { grid-column: span 4; }
-    .span6 { grid-column: span 6; }
-    .span12 { grid-column: span 12; }
-    .card h3 { font-size: 28px; margin-bottom: 10px; }
-    .card p, .card li { color: rgba(245,247,250,.75); line-height: 1.6; }
-    .price { font-size: 42px; color: #d4af37; font-family: Georgia, serif; margin: 12px 0; }
-    ul { padding-left: 19px; }
-    .lookupBox {
+
+    .card h3 {
+      margin-bottom: 10px;
+      font-size: 20px;
+    }
+
+    .card p {
+      color: #c8d0ff;
+      font-size: 14px;
+      line-height: 1.6;
+      margin-bottom: 14px;
+    }
+
+    .input-row {
       display: flex;
       gap: 10px;
-      max-width: 640px;
-      margin: 26px auto 0;
     }
+
     input {
       flex: 1;
-      border: 1px solid rgba(255,255,255,.16);
-      background: rgba(0,0,0,.34);
-      color: #fff;
-      border-radius: 18px;
-      padding: 16px 18px;
+      padding: 13px;
+      border-radius: 14px;
+      border: 1px solid rgba(255,255,255,0.16);
+      background: rgba(0,0,0,0.25);
+      color: white;
       outline: none;
-      font-size: 16px;
     }
-    .starResult { display: none; margin-top: 24px; }
-    .detailRow {
-      display: flex;
-      justify-content: space-between;
-      gap: 18px;
-      padding: 13px 0;
-      border-bottom: 1px solid rgba(255,255,255,.10);
+
+    .small-btn {
+      padding: 13px 15px;
+      border-radius: 14px;
+      border: none;
+      background: #ffffff;
+      font-weight: 800;
+      cursor: pointer;
     }
-    .detailRow span:first-child { color: rgba(245,247,250,.58); }
-    .certificateMock {
-      border: 1px solid rgba(212,175,55,.42);
-      background:
-        radial-gradient(circle at 50% 20%, rgba(212,175,55,.18), transparent 28%),
-        linear-gradient(135deg, rgba(255,255,255,.08), rgba(255,255,255,.02));
-      min-height: 340px;
-      display: grid;
-      place-items: center;
-      text-align: center;
-      border-radius: 24px;
-      padding: 24px;
+
+    .result {
+      margin-top: 12px;
+      color: #7ddcff;
+      font-size: 13px;
+      min-height: 18px;
     }
-    .mockName { font-family: Georgia, serif; color: #d4af37; font-size: clamp(42px, 6vw, 72px); }
-    .tiny { color: rgba(245,247,250,.55); font-size: 12px; letter-spacing: .14em; text-transform: uppercase; }
-    .disclaimer {
-      border: 1px solid rgba(212,175,55,.25);
-      background: rgba(212,175,55,.07);
-      color: rgba(245,247,250,.76);
-      border-radius: 22px;
-      padding: 18px;
-      line-height: 1.6;
-    }
-    footer { padding: 36px 0; border-top: 1px solid rgba(255,255,255,.08); color: rgba(245,247,250,.55); text-align: center; }
-    @media (max-width: 820px) {
-      .navLinks { display: none; }
-      .span4, .span6 { grid-column: span 12; }
-      .lookupBox { flex-direction: column; }
-      .hero { min-height: auto; }
-    }
-  
-    .skyViewer {
-      position: relative;
-      min-height: 520px;
-      overflow: hidden;
-      border-radius: 28px;
-      border: 1px solid rgba(212,175,55,.28);
-      background: #000;
-    }
-    #cameraFeed {
-      width: 100%;
-      height: 520px;
-      object-fit: cover;
-      display: none;
-      filter: contrast(1.05) brightness(.78);
-    }
-    .skyOverlay {
-      position: absolute;
-      inset: 0;
-      display: grid;
-      place-items: center;
-      text-align: center;
-      pointer-events: none;
-      background: radial-gradient(circle at 50% 42%, rgba(212,175,55,.18), transparent 18%);
-    }
-    .starPin {
-      position: relative;
-      width: 190px;
-      height: 190px;
-      border-radius: 50%;
-      display: grid;
-      place-items: center;
-      animation: pulseGlow 2.2s infinite ease-in-out;
-    }
-    .starPin::before {
-      content: "✦";
-      position: absolute;
-      top: 22px;
-      color: #d4af37;
-      font-size: 46px;
-      text-shadow: 0 0 28px rgba(212,175,55,.95);
-    }
-    .clientStarName {
-      margin-top: 88px;
-      font-family: Georgia, serif;
-      color: #d4af37;
-      font-size: clamp(32px, 8vw, 62px);
-      text-shadow: 0 0 26px rgba(212,175,55,.62);
-    }
-    .viewerHud {
-      position: absolute;
-      top: 18px;
-      left: 18px;
-      right: 18px;
-      display: flex;
-      justify-content: space-between;
-      gap: 12px;
-      color: rgba(245,247,250,.78);
-      font-size: 12px;
-      letter-spacing: .12em;
-      text-transform: uppercase;
-    }
-    .viewerHint {
-      position: absolute;
-      left: 18px;
-      right: 18px;
-      bottom: 18px;
-      color: rgba(245,247,250,.78);
-      background: rgba(0,0,0,.38);
-      border: 1px solid rgba(255,255,255,.12);
-      border-radius: 18px;
-      padding: 14px;
-      line-height: 1.5;
-      text-align: center;
-    }
-    @keyframes pulseGlow {
-      0%, 100% { transform: scale(.97); filter: drop-shadow(0 0 18px rgba(212,175,55,.55)); }
-      50% { transform: scale(1.04); filter: drop-shadow(0 0 42px rgba(212,175,55,.95)); }
+
+    @media (max-width: 850px) {
+      header {
+        padding: 20px;
+      }
+
+      main {
+        grid-template-columns: 1fr;
+        padding: 24px 20px 60px;
+        text-align: left;
+      }
+
+      .hero h1 {
+        letter-spacing: -1.5px;
+      }
+
+      .visual {
+        min-height: 430px;
+      }
+
+      .planet {
+        width: 230px;
+        height: 230px;
+      }
+
+      .planet::after {
+        width: 315px;
+      }
+
+      .badge {
+        display: none;
+      }
     }
   </style>
 </head>
-<body>
-  <nav class="nav">
-    <div class="container navInner">
-      <a href="#home" class="brand">ASTRO PULSE</a>
-      <div class="navLinks">
-        <a href="#how">How It Works</a>
-        <a href="#plans">Plans</a>
-        <a href="#lookup">Find Star</a>
-        <a href="#order">Order</a>
-      </div>
-      <a class="btn" href="#order">Gift a Star</a>
-    </div>
-  </nav>
 
-  <header id="home" class="hero">
-    <div class="container">
-      <div class="badge">Private Symbolic Star Dedication</div>
-      <h1>Gift a Memory<br><span class="gold">Written in the Sky</span></h1>
-      <p class="lead">Astro Pulse creates premium symbolic star dedication certificates with a unique registration code, real star reference, and a simple sky-finding guide.</p>
-      <div class="heroActions">
-        <a class="btn" href="#order">Start from ₹49</a>
-        <a class="btn secondary" href="#lookup">Enter Registration Code</a>
-      </div>
-    </div>
+<body>
+  <div class="stars"></div>
+  <div class="stars2"></div>
+  <div class="glow"></div>
+
+  <header>
+    <div class="logo">Astro<span>Pulse</span></div>
+    <div class="badge">Premium Star Naming Experience</div>
   </header>
 
-  <section id="how">
-    <div class="container">
-      <div class="sectionHead">
-        <h2>How It Works</h2>
-        <p>A luxury emotional gift experience created with a real sky reference and a symbolic private dedication.</p>
-      </div>
-      <div class="grid">
-        <div class="card span4">
-          <h3>01. Name the Memory</h3>
-          <p>Tell us the name, occasion, and message you want on the certificate.</p>
-        </div>
-        <div class="card span4">
-          <h3>02. Receive Your Code</h3>
-          <p>We create a unique Astro Pulse registration code and a premium digital certificate.</p>
-        </div>
-        <div class="card span4">
-          <h3>03. Find the Star</h3>
-          <p>Use the real star reference and sky guide to locate your dedicated star in the night sky.</p>
-        </div>
-      </div>
-    </div>
-  </section>
+  <main>
+    <section class="hero">
+      <h1>Name a <span>Star</span><br>Forever.</h1>
+      <p>
+        Create a magical cosmic memory with AstroPulse. Enter a name, generate a premium star identity,
+        and experience a dreamy sky-inspired digital moment.
+      </p>
 
-  <section id="plans">
-    <div class="container">
-      <div class="sectionHead">
-        <h2>Choose Your Gift</h2>
-        <p>Start simple. Make it emotional. Keep it unforgettable.</p>
+      <div class="buttons">
+        <button class="btn" onclick="scrollToCard()">Start Naming</button>
+        <button class="btn secondary">Explore Stars</button>
       </div>
-      <div class="grid">
-        <div class="card span4">
-          <h3>Basic</h3>
-          <div class="price">₹49</div>
-          <ul>
-            <li>Digital certificate</li>
-            <li>Registration code</li>
-            <li>Real star reference</li>
-            <li>Basic sky guide</li>
-          </ul>
-        </div>
-        <div class="card span4">
-          <h3>Premium</h3>
-          <div class="price">₹99</div>
-          <ul>
-            <li>Premium certificate</li>
-            <li>Custom message</li>
-            <li>Registration code</li>
-            <li>Sky-finding guide</li>
-          </ul>
-        </div>
-        <div class="card span4">
-          <h3>Love Edition</h3>
-          <div class="price">₹149</div>
-          <ul>
-            <li>Romantic certificate</li>
-            <li>Birthday/anniversary line</li>
-            <li>Custom message</li>
-            <li>Premium delivery</li>
-          </ul>
-        </div>
-      </div>
-    </div>
-  </section>
+    </section>
 
-  <section id="lookup">
-    <div class="container">
-      <div class="sectionHead">
-        <h2>Find Your Star</h2>
-        <p>Enter your Astro Pulse registration code to view your symbolic star dedication record.</p>
-      </div>
-      <div class="card">
-        <div class="lookupBox">
-          <input id="codeInput" placeholder="Enter code, e.g. AP-2026-001" />
-          <button class="btn" onclick="findStar()">Open Record</button>
-        </div>
-        <p id="lookupMessage" style="text-align:center;color:rgba(245,247,250,.65)"></p>
-        <div id="starResult" class="starResult grid">
-          <div class="span6">
-            <div class="certificateMock">
-              <div>
-                <div class="tiny">Astro Pulse Star Record</div>
-                <div id="resultName" class="mockName">Ananya</div>
-                <p>Symbolically dedicated in the Astro Pulse Private Registry.</p>
-              </div>
-            </div>
-          </div>
-          <div class="span6 card">
-            <div class="detailRow"><span>Registration Code</span><strong id="resultCode"></strong></div>
-            <div class="detailRow"><span>Real Star Reference</span><strong id="resultStar"></strong></div>
-            <div class="detailRow"><span>Constellation</span><strong id="resultConstellation"></strong></div>
-            <div class="detailRow"><span>Dedication Date</span><strong id="resultDate"></strong></div>
-            <p id="resultMessage"></p>
-            <a class="btn" target="_blank" href="https://stellarium-web.org/">Open Sky Map</a>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
+    <section class="visual">
+      <div class="planet"></div>
 
-  <section id="sky-viewer">
-    <div class="container">
-      <div class="sectionHead">
-        <h2>Sky Reveal Mode</h2>
-        <p>Open camera mode and reveal the symbolic star name over the real night sky.</p>
-      </div>
-      <div class="grid">
-        <div class="span6">
-          <div class="skyViewer">
-            <video id="cameraFeed" autoplay playsinline muted></video>
-            <div class="skyOverlay">
-              <div class="viewerHud">
-                <span>ASTRO PULSE SKY VIEW</span>
-                <span id="viewerCode">AP-2026-001</span>
-              </div>
-              <div class="starPin">
-                <div id="viewerName" class="clientStarName">ANANYA'S STAR</div>
-              </div>
-              <div id="viewerHint" class="viewerHint">Tap “Start Sky Reveal”, allow camera permission, then point your phone toward the night sky.</div>
-            </div>
-          </div>
-        </div>
-        <div class="span6 card">
-          <h3>Try Sky Reveal</h3>
-          <p>Enter the customer’s registration code. The screen will show the dedicated name over the camera view.</p>
-          <div class="lookupBox" style="margin:18px 0 0;">
-            <input id="viewerInput" placeholder="Enter code, e.g. AP-2026-001" />
-            <button class="btn" onclick="loadSkyReveal()">Load</button>
-          </div>
-          <p style="color:rgba(245,247,250,.65)">This is a symbolic overlay experience. It does not officially rename stars, but creates a personal sky-viewing moment.</p>
-          <button class="btn" onclick="startCamera()">Start Sky Reveal</button>
-        </div>
-      </div>
-    </div>
-  </section>
+      <div class="card" id="starCard">
+        <h3>Create Your Star</h3>
+        <p>Type a name and generate your first AstroPulse star preview.</p>
 
-  <section id="order">
-    <div class="container">
-      <div class="grid">
-        <div class="span6">
-          <div class="sectionHead" style="text-align:left;margin-bottom:20px;">
-            <h2>Order Your Star Gift</h2>
-            <p>Fill the order form, send payment screenshot, and receive your certificate through WhatsApp or email.</p>
-          </div>
-          <a class="btn" href="YOUR_GOOGLE_FORM_LINK_HERE" target="_blank">Open Order Form</a>
+        <div class="input-row">
+          <input id="nameInput" type="text" placeholder="Enter name..." />
+          <button class="small-btn" onclick="generateStar()">Go</button>
         </div>
-        <div class="span6">
-          <div class="disclaimer">
-            <strong>Important:</strong> Astro Pulse creates symbolic private star dedication gifts. We do not officially name astronomical stars, and we are not affiliated with NASA or the IAU. Your certificate is a personal memory gift using a real star reference.
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
 
-  <footer>
-    <div class="container">Astro Pulse — Your memories, written in the sky.</div>
-  </footer>
+        <div class="result" id="resultText"></div>
+      </div>
+    </section>
+  </main>
 
   <script>
-    const STAR_RECORDS = {
-      "AP-2026-001": {
-        name: "Ananya",
-        star: "Sirius",
-        constellation: "Canis Major",
-        date: "24 April 2026",
-        message: "A quiet light in the universe, carrying your memory forever."
-      },
-      "AP-2026-002": {
-        name: "Riya",
-        star: "Vega",
-        constellation: "Lyra",
-        date: "24 April 2026",
-        message: "Some bonds are not measured by distance, but by how brightly they shine."
-      }
-    };
+    function generateStar() {
+      const name = document.getElementById("nameInput").value.trim();
+      const result = document.getElementById("resultText");
 
-    function findStar() {
-      const code = document.getElementById('codeInput').value.trim().toUpperCase();
-      const msg = document.getElementById('lookupMessage');
-      const result = document.getElementById('starResult');
-      const data = STAR_RECORDS[code];
-
-      if (!data) {
-        result.style.display = 'none';
-        msg.textContent = 'No record found. Please check your registration code.';
+      if (!name) {
+        result.innerText = "Please enter a name first.";
         return;
       }
 
-      msg.textContent = '';
-      result.style.display = 'grid';
-      document.getElementById('resultName').textContent = data.name;
-      document.getElementById('resultCode').textContent = code;
-      document.getElementById('resultStar').textContent = data.star;
-      document.getElementById('resultConstellation').textContent = data.constellation;
-      document.getElementById('resultDate').textContent = data.date;
-      document.getElementById('resultMessage').textContent = data.message;
+      const starId = "AP-" + Math.floor(100000 + Math.random() * 900000);
+      result.innerText = name + "'s star has been generated • ID: " + starId;
     }
 
-    function loadSkyReveal() {
-      const code = document.getElementById('viewerInput').value.trim().toUpperCase();
-      const data = STAR_RECORDS[code];
-      const hint = document.getElementById('viewerHint');
-      if (!data) {
-        hint.textContent = 'No record found. Please check the registration code.';
-        return;
-      }
-      document.getElementById('viewerName').textContent = data.name.toUpperCase() + "'S STAR";
-      document.getElementById('viewerCode').textContent = code;
-      hint.textContent = 'Record loaded. Tap “Start Sky Reveal”, allow camera permission, then point your phone toward the night sky.';
-    }
-
-    async function startCamera() {
-      const video = document.getElementById('cameraFeed');
-      const hint = document.getElementById('viewerHint');
-      try {
-        const stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: { ideal: 'environment' } }, audio: false });
-        video.srcObject = stream;
-        video.style.display = 'block';
-        hint.textContent = 'Sky Reveal is active. Point your phone toward the night sky and watch the dedicated name appear on screen.';
-      } catch (error) {
-        hint.textContent = 'Camera permission is needed for Sky Reveal Mode. Please allow camera access from your browser settings.';
-      }
+    function scrollToCard() {
+      document.getElementById("starCard").scrollIntoView({ behavior: "smooth" });
     }
   </script>
 </body>
