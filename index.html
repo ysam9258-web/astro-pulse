@@ -1,211 +1,662 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AstroPulse</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>AstroPulse | Turn a Memory Into a Star</title>
 
 <style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:Montserrat,sans-serif;}
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family: Inter, Montserrat, Arial, sans-serif;
+}
+
+html{scroll-behavior:smooth;}
 
 body{
-background: radial-gradient(circle at top,#0b0f2a,#02030a);
-color:white;
-overflow-x:hidden;
+  min-height:100vh;
+  color:#fff;
+  background:#02030b;
+  overflow-x:hidden;
 }
 
-/* ⭐ STARS */
-.stars{
-position:fixed;
-width:100%;height:100%;
-background:url('https://www.transparenttextures.com/patterns/stardust.png');
-animation:move 100s linear infinite;
-opacity:.4;
+/* BACKGROUND */
+.bg{
+  position:fixed;
+  inset:0;
+  background:
+    radial-gradient(circle at 20% 20%, rgba(118,85,255,.32), transparent 30%),
+    radial-gradient(circle at 80% 30%, rgba(0,225,255,.20), transparent 30%),
+    radial-gradient(circle at 50% 100%, rgba(255,189,89,.12), transparent 35%),
+    linear-gradient(180deg,#070a22,#02030b 70%);
+  z-index:-4;
 }
-@keyframes move{
-from{background-position:0 0;}
-to{background-position:0 -10000px;}
+
+.stars,.stars2,.nebula{
+  position:fixed;
+  inset:0;
+  z-index:-3;
+  pointer-events:none;
+}
+
+.stars{
+  background-image:
+    radial-gradient(#fff 1px, transparent 1px),
+    radial-gradient(#7ddcff 1px, transparent 1px);
+  background-size:70px 70px,130px 130px;
+  opacity:.45;
+  animation: drift 60s linear infinite;
+}
+
+.stars2{
+  background-image:radial-gradient(rgba(255,255,255,.85) 1px, transparent 1px);
+  background-size:180px 180px;
+  opacity:.25;
+  animation: drift 100s linear infinite reverse;
+}
+
+.nebula{
+  background: radial-gradient(circle, rgba(132,92,255,.22), transparent 55%);
+  width:700px;
+  height:700px;
+  top:10%;
+  left:55%;
+  filter:blur(45px);
+  animation:pulse 7s ease-in-out infinite;
+}
+
+@keyframes drift{
+  from{transform:translateY(0);}
+  to{transform:translateY(-700px);}
+}
+
+@keyframes pulse{
+  0%,100%{transform:scale(1);opacity:.7;}
+  50%{transform:scale(1.18);opacity:1;}
 }
 
 /* HEADER */
 header{
-display:flex;
-justify-content:space-between;
-padding:20px 8%;
-position:relative;
-z-index:10;
+  position:relative;
+  z-index:10;
+  padding:24px 7%;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
 }
-.logo{
-font-size:26px;
-font-weight:800;
-}
-.logo span{color:#7ddcff;text-shadow:0 0 15px #7ddcff;}
 
-.btn{
-padding:10px 18px;
-border-radius:20px;
-background:linear-gradient(135deg,#7ddcff,#b792ff);
-border:none;
-cursor:pointer;
-font-weight:700;
+.logo{
+  font-size:26px;
+  font-weight:900;
+  letter-spacing:.5px;
+}
+
+.logo span{
+  color:#7ddcff;
+  text-shadow:0 0 22px rgba(125,220,255,.9);
+}
+
+.nav{
+  display:flex;
+  gap:12px;
+  align-items:center;
+}
+
+.nav a{
+  color:#dce6ff;
+  text-decoration:none;
+  font-size:14px;
+  opacity:.85;
+}
+
+.cta{
+  border:0;
+  color:#061021;
+  font-weight:900;
+  padding:13px 20px;
+  border-radius:999px;
+  background:linear-gradient(135deg,#7ddcff,#b997ff,#fff);
+  box-shadow:0 0 35px rgba(125,220,255,.32);
+  cursor:pointer;
 }
 
 /* HERO */
 .hero{
-text-align:center;
-padding:100px 20px;
-}
-.hero h1{
-font-size:70px;
-letter-spacing:-2px;
-}
-.hero span{
-background:linear-gradient(90deg,#7ddcff,#b792ff);
--webkit-background-clip:text;
-color:transparent;
-}
-.hero p{
-color:#cfd6ff;
-margin:20px auto;
-max-width:500px;
+  min-height:92vh;
+  padding:70px 7% 80px;
+  display:grid;
+  grid-template-columns:1.05fr .95fr;
+  align-items:center;
+  gap:50px;
 }
 
-/* PLANET */
-.planet{
-width:250px;height:250px;
-border-radius:50%;
-margin:40px auto;
-background:radial-gradient(circle,#fff,#7ddcff,#1a1f7c);
-box-shadow:0 0 60px #7ddcff;
-animation:float 4s ease-in-out infinite;
+.kicker{
+  display:inline-flex;
+  padding:9px 14px;
+  border:1px solid rgba(255,255,255,.14);
+  border-radius:999px;
+  color:#b9c7ff;
+  background:rgba(255,255,255,.06);
+  backdrop-filter:blur(14px);
+  margin-bottom:22px;
+  font-size:13px;
 }
+
+.hero h1{
+  font-size:clamp(48px,8vw,92px);
+  line-height:.94;
+  letter-spacing:-4px;
+  margin-bottom:24px;
+}
+
+.gradient{
+  background:linear-gradient(90deg,#7ddcff,#b997ff,#fff);
+  -webkit-background-clip:text;
+  color:transparent;
+}
+
+.hero p{
+  max-width:610px;
+  color:#c7d2ff;
+  line-height:1.75;
+  font-size:17px;
+  margin-bottom:28px;
+}
+
+.hero-actions{
+  display:flex;
+  gap:14px;
+  flex-wrap:wrap;
+}
+
+.secondary{
+  border:1px solid rgba(255,255,255,.18);
+  color:#fff;
+  font-weight:800;
+  padding:13px 20px;
+  border-radius:999px;
+  background:rgba(255,255,255,.07);
+  backdrop-filter:blur(12px);
+  cursor:pointer;
+}
+
+/* COSMIC VISUAL */
+.visual{
+  position:relative;
+  min-height:520px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+.orbit{
+  width:430px;
+  height:430px;
+  border-radius:50%;
+  border:1px solid rgba(255,255,255,.12);
+  position:absolute;
+  animation:spin 18s linear infinite;
+}
+
+.orbit::before,.orbit::after{
+  content:"";
+  position:absolute;
+  width:10px;
+  height:10px;
+  border-radius:50%;
+  background:#fff;
+  box-shadow:0 0 18px #7ddcff;
+}
+
+.orbit::before{top:20px;left:80px;}
+.orbit::after{right:40px;bottom:75px;background:#b997ff;}
+
+@keyframes spin{
+  to{transform:rotate(360deg);}
+}
+
+.planet{
+  width:285px;
+  height:285px;
+  border-radius:50%;
+  background:
+    radial-gradient(circle at 35% 28%, #fff 0 5%, #7ddcff 10%, #4452ff 32%, #10164f 67%, #030414 100%);
+  box-shadow:
+    0 0 75px rgba(125,220,255,.6),
+    inset -45px -50px 65px rgba(0,0,0,.62);
+  animation:float 4.8s ease-in-out infinite;
+}
+
+.planet::after{
+  content:"";
+  position:absolute;
+  width:390px;
+  height:90px;
+  border:2px solid rgba(255,255,255,.26);
+  border-radius:50%;
+  transform:translate(-53px,95px) rotate(-17deg);
+  box-shadow:0 0 25px rgba(125,220,255,.25);
+}
+
 @keyframes float{
-50%{transform:translateY(-20px);}
+  0%,100%{transform:translateY(0);}
+  50%{transform:translateY(-22px);}
+}
+
+.preview-card{
+  position:absolute;
+  bottom:0;
+  width:min(390px,92%);
+  padding:22px;
+  border-radius:28px;
+  background:rgba(255,255,255,.08);
+  border:1px solid rgba(255,255,255,.16);
+  backdrop-filter:blur(22px);
+  box-shadow:0 30px 90px rgba(0,0,0,.45);
+}
+
+.preview-card h3{font-size:22px;margin-bottom:8px;}
+.preview-card p{color:#c7d2ff;font-size:14px;line-height:1.6;margin-bottom:14px;}
+
+.form{
+  display:grid;
+  gap:10px;
+}
+
+.form input{
+  width:100%;
+  padding:13px 14px;
+  border-radius:15px;
+  border:1px solid rgba(255,255,255,.14);
+  background:rgba(0,0,0,.25);
+  color:#fff;
+  outline:none;
+}
+
+.result{
+  color:#7ddcff;
+  font-size:13px;
+  min-height:18px;
+}
+
+/* SECTIONS */
+section{
+  padding:80px 7%;
+}
+
+.section-title{
+  text-align:center;
+  margin-bottom:38px;
+}
+
+.section-title h2{
+  font-size:clamp(34px,5vw,56px);
+  letter-spacing:-2px;
+  margin-bottom:12px;
+}
+
+.section-title p{
+  color:#c7d2ff;
+  max-width:690px;
+  margin:auto;
+  line-height:1.7;
+}
+
+/* EXPERIENCE */
+.grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:18px;
+}
+
+.feature{
+  padding:26px;
+  border-radius:26px;
+  background:rgba(255,255,255,.06);
+  border:1px solid rgba(255,255,255,.12);
+  backdrop-filter:blur(16px);
+  min-height:210px;
+}
+
+.feature .icon{
+  font-size:30px;
+  margin-bottom:18px;
+}
+
+.feature h3{
+  font-size:21px;
+  margin-bottom:10px;
+}
+
+.feature p{
+  color:#c7d2ff;
+  line-height:1.65;
+  font-size:14px;
 }
 
 /* PRICING */
 .pricing{
-display:flex;
-justify-content:center;
-gap:20px;
-padding:60px 20px;
-flex-wrap:wrap;
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:20px;
 }
 
-.card{
-background:rgba(255,255,255,0.05);
-padding:25px;
-border-radius:20px;
-width:260px;
-text-align:center;
-border:1px solid rgba(255,255,255,0.1);
-backdrop-filter:blur(10px);
-transition:.3s;
+.price-card{
+  position:relative;
+  padding:30px;
+  border-radius:30px;
+  background:rgba(255,255,255,.07);
+  border:1px solid rgba(255,255,255,.14);
+  backdrop-filter:blur(18px);
+  transition:.35s;
+  overflow:hidden;
 }
-.card:hover{
-transform:translateY(-10px) scale(1.03);
-box-shadow:0 0 25px #7ddcff;
+
+.price-card:hover{
+  transform:translateY(-10px);
+  box-shadow:0 0 50px rgba(125,220,255,.20);
 }
+
+.price-card.popular{
+  border-color:rgba(125,220,255,.65);
+  box-shadow:0 0 50px rgba(125,220,255,.16);
+}
+
+.tag{
+  display:inline-block;
+  padding:7px 11px;
+  border-radius:999px;
+  background:rgba(125,220,255,.14);
+  color:#7ddcff;
+  font-size:12px;
+  margin-bottom:16px;
+}
+
+.price-card h3{font-size:26px;margin-bottom:7px;}
+.price-card .sub{color:#c7d2ff;font-size:14px;line-height:1.6;margin-bottom:18px;}
+
 .price{
-font-size:28px;
-margin:10px 0;
-color:#7ddcff;
+  font-size:44px;
+  font-weight:950;
+  margin-bottom:20px;
+}
+
+.price small{
+  font-size:16px;
+  color:#b8c3ff;
+}
+
+.price-card ul{
+  list-style:none;
+  display:grid;
+  gap:12px;
+  color:#dfe7ff;
+  margin-bottom:24px;
+  font-size:14px;
+}
+
+.price-card li::before{
+  content:"✦ ";
+  color:#7ddcff;
 }
 
 /* REVIEWS */
 .reviews{
-padding:60px 20px;
-text-align:center;
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:18px;
 }
-.review-box{
-max-width:600px;
-margin:20px auto;
-padding:20px;
-background:rgba(255,255,255,0.05);
-border-radius:15px;
+
+.review{
+  padding:24px;
+  border-radius:26px;
+  background:rgba(255,255,255,.06);
+  border:1px solid rgba(255,255,255,.12);
+}
+
+.review .stars-text{
+  color:#ffd88a;
+  letter-spacing:2px;
+  margin-bottom:14px;
+}
+
+.review p{
+  color:#d7ddff;
+  line-height:1.7;
+  font-size:14px;
+}
+
+.review strong{
+  display:block;
+  margin-top:16px;
+}
+
+/* TRUST */
+.trust{
+  padding:26px;
+  border-radius:26px;
+  background:linear-gradient(135deg,rgba(125,220,255,.12),rgba(185,151,255,.10));
+  border:1px solid rgba(255,255,255,.14);
+  color:#dce6ff;
+  line-height:1.7;
+  text-align:center;
 }
 
 /* FOOTER */
 footer{
-text-align:center;
-padding:30px;
-color:#aaa;
+  padding:36px 7%;
+  border-top:1px solid rgba(255,255,255,.09);
+  color:#9da9d8;
+  display:flex;
+  justify-content:space-between;
+  gap:20px;
+  flex-wrap:wrap;
+}
+
+/* MOBILE */
+@media(max-width:900px){
+  header{padding:20px;}
+  .nav a{display:none;}
+  .hero{
+    grid-template-columns:1fr;
+    padding:50px 20px 70px;
+  }
+  .hero h1{letter-spacing:-2px;}
+  section{padding:65px 20px;}
+  .grid,.pricing,.reviews{grid-template-columns:1fr;}
+  .visual{min-height:500px;}
+  .planet{width:240px;height:240px;}
+  .orbit{width:350px;height:350px;}
 }
 </style>
 </head>
 
 <body>
-
+<div class="bg"></div>
 <div class="stars"></div>
+<div class="stars2"></div>
+<div class="nebula"></div>
 
 <header>
-<div class="logo">Astro<span>Pulse</span></div>
-<button class="btn">Explore</button>
+  <div class="logo">Astro<span>Pulse</span></div>
+  <div class="nav">
+    <a href="#experience">Experience</a>
+    <a href="#pricing">Pricing</a>
+    <a href="#reviews">Reviews</a>
+    <button class="cta" onclick="document.getElementById('pricing').scrollIntoView()">Start Now</button>
+  </div>
 </header>
 
-<section class="hero">
-<h1>Enter The <span>Astro World</span></h1>
-<p>Name a real star and create a memory that lasts forever.</p>
+<main class="hero">
+  <div>
+    <div class="kicker">A cinematic astro-gifting experience</div>
+    <h1>Turn a <span class="gradient">Memory</span><br>Into a Star.</h1>
+    <p>
+      AstroPulse creates a personalised symbolic star memory for someone special.
+      Add a name, date, location and message — then reveal it through a beautiful cosmic preview.
+    </p>
+    <div class="hero-actions">
+      <button class="cta" onclick="document.getElementById('previewName').focus()">Create Preview</button>
+      <button class="secondary" onclick="document.getElementById('experience').scrollIntoView()">See Experience</button>
+    </div>
+  </div>
 
-<div class="planet"></div>
+  <div class="visual">
+    <div class="orbit"></div>
+    <div class="planet"></div>
 
-<button class="btn">Start Naming</button>
+    <div class="preview-card">
+      <h3>Your Astro Memory Preview</h3>
+      <p>Enter a name and create a glowing symbolic star identity.</p>
+
+      <div class="form">
+        <input id="previewName" placeholder="Enter name e.g. Ananya" />
+        <input id="previewMessage" placeholder="Short message e.g. Forever in my sky" />
+        <button class="cta" onclick="generatePreview()">Generate Star Memory</button>
+        <div class="result" id="result"></div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<section id="experience">
+  <div class="section-title">
+    <h2>Not just a certificate. <span class="gradient">A moment.</span></h2>
+    <p>
+      AstroPulse is designed like a premium digital gift reveal — emotional, cinematic and shareable.
+    </p>
+  </div>
+
+  <div class="grid">
+    <div class="feature">
+      <div class="icon">🌌</div>
+      <h3>Cinematic Reveal</h3>
+      <p>A stylish cosmic reveal that makes the recipient feel like they entered their own astro world.</p>
+    </div>
+
+    <div class="feature">
+      <div class="icon">⭐</div>
+      <h3>Personal Star ID</h3>
+      <p>Generate a unique AstroPulse ID with name, message and memory details for a premium keepsake feel.</p>
+    </div>
+
+    <div class="feature">
+      <div class="icon">📜</div>
+      <h3>Giftable Certificate</h3>
+      <p>A clean premium certificate concept that can be shared on WhatsApp, Instagram or printed later.</p>
+    </div>
+  </div>
 </section>
 
-<!-- PRICING -->
-<section class="pricing">
+<section id="pricing">
+  <div class="section-title">
+    <h2>Choose Your <span class="gradient">Astro Gift</span></h2>
+    <p>Simple pricing for a beautiful personalised cosmic memory.</p>
+  </div>
 
-<div class="card">
-<h3>Basic</h3>
-<p>Perfect for simple gifting</p>
-<div class="price">₹99</div>
-<p>✔ Star Name</p>
-<p>✔ Digital View</p>
-<button class="btn">Buy Now</button>
-</div>
+  <div class="pricing">
+    <div class="price-card">
+      <span class="tag">Basic</span>
+      <h3>Star Spark</h3>
+      <p class="sub">For a simple sweet digital gift.</p>
+      <div class="price">₹99<small>/-</small></div>
+      <ul>
+        <li>Symbolic star name</li>
+        <li>AstroPulse Star ID</li>
+        <li>Digital preview</li>
+        <li>Basic gift message</li>
+      </ul>
+      <button class="cta">Choose Basic</button>
+    </div>
 
-<div class="card">
-<h3>Premium</h3>
-<p>Most popular choice</p>
-<div class="price">₹149</div>
-<p>✔ Star Name</p>
-<p>✔ Sky Map</p>
-<p>✔ Certificate</p>
-<button class="btn">Buy Now</button>
-</div>
+    <div class="price-card popular">
+      <span class="tag">Most Popular</span>
+      <h3>Moonlit Memory</h3>
+      <p class="sub">Best for birthdays, love gifts and special days.</p>
+      <div class="price">₹149<small>/-</small></div>
+      <ul>
+        <li>Everything in Basic</li>
+        <li>Premium sky-style preview</li>
+        <li>Digital certificate</li>
+        <li>Name + date + message</li>
+      </ul>
+      <button class="cta">Choose Premium</button>
+    </div>
 
-<div class="card">
-<h3>Ultimate</h3>
-<p>Luxury experience</p>
-<div class="price">₹199</div>
-<p>✔ Star Name</p>
-<p>✔ Premium Map</p>
-<p>✔ HD Certificate</p>
-<p>✔ Priority Access</p>
-<button class="btn">Buy Now</button>
-</div>
-
+    <div class="price-card">
+      <span class="tag">Most Premium</span>
+      <h3>Galaxy Keepsake</h3>
+      <p class="sub">For a more cinematic luxury gift reveal.</p>
+      <div class="price">₹199<small>/-</small></div>
+      <ul>
+        <li>Everything in Premium</li>
+        <li>Cinematic reveal page</li>
+        <li>HD certificate concept</li>
+        <li>Priority customisation</li>
+      </ul>
+      <button class="cta">Choose Most Premium</button>
+    </div>
+  </div>
 </section>
 
-<!-- REVIEWS -->
-<section class="reviews">
-<h2>What People Say</h2>
+<section id="reviews">
+  <div class="section-title">
+    <h2>People love the <span class="gradient">feeling</span></h2>
+    <p>Built for emotional gifting, not boring transactions.</p>
+  </div>
 
-<div class="review-box">
-⭐️⭐️⭐️⭐️⭐️  
-“Amazing experience! Felt like gifting a piece of universe.”
-</div>
+  <div class="reviews">
+    <div class="review">
+      <div class="stars-text">★★★★★</div>
+      <p>“It felt like a small universe made for one person. Very beautiful gifting idea.”</p>
+      <strong>— Riya, Kolkata</strong>
+    </div>
 
-<div class="review-box">
-⭐️⭐️⭐️⭐️⭐️  
-“Beautiful UI and concept. Totally worth it.”
-</div>
+    <div class="review">
+      <div class="stars-text">★★★★★</div>
+      <p>“The preview and message made it feel personal. Much better than a normal digital card.”</p>
+      <strong>— Arjun, Howrah</strong>
+    </div>
 
+    <div class="review">
+      <div class="stars-text">★★★★★</div>
+      <p>“Classy, emotional and shareable. Perfect for anniversary or birthday surprises.”</p>
+      <strong>— Sneha, Barrackpore</strong>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="trust">
+    <strong>Trust Note:</strong>
+    AstroPulse creates symbolic personalised star memories for gifting and keepsake purposes.
+    It does not claim official astronomical star naming or scientific registration.
+  </div>
 </section>
 
 <footer>
-© AstroPulse | Crafted with Cosmic Energy 🌌
+  <div>© 2026 AstroPulse. Turn a memory into a star.</div>
+  <div>Symbolic Astro Gifting Experience</div>
 </footer>
+
+<script>
+function generatePreview(){
+  const name = document.getElementById("previewName").value.trim();
+  const message = document.getElementById("previewMessage").value.trim();
+  const result = document.getElementById("result");
+
+  if(!name){
+    result.innerText = "Please enter a name first.";
+    return;
+  }
+
+  const id = "AP-" + Math.floor(100000 + Math.random() * 900000);
+  const finalMessage = message ? " • " + message : "";
+  result.innerText = name + "'s Astro Memory is ready • Star ID: " + id + finalMessage;
+}
+</script>
 
 </body>
 </html>
