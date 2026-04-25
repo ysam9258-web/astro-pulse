@@ -4,7 +4,103 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>AstroPulse | Turn a Memory Into a Star</title>
+.cert-wrap{
+  display:grid;
+  grid-template-columns:.8fr 1.2fr;
+  gap:24px;
+  align-items:center;
+}
 
+.cert-form{
+  display:grid;
+  gap:12px;
+  padding:24px;
+  border-radius:26px;
+  background:rgba(255,255,255,.06);
+  border:1px solid rgba(255,255,255,.12);
+  backdrop-filter:blur(16px);
+}
+
+.cert-form input{
+  padding:14px;
+  border-radius:15px;
+  border:1px solid rgba(255,255,255,.14);
+  background:rgba(0,0,0,.25);
+  color:#fff;
+  outline:none;
+}
+
+.certificate{
+  min-height:420px;
+  padding:42px;
+  border-radius:34px;
+  text-align:center;
+  background:
+    radial-gradient(circle at top,rgba(125,220,255,.22),transparent 35%),
+    linear-gradient(145deg,rgba(255,255,255,.12),rgba(255,255,255,.04));
+  border:1px solid rgba(255,255,255,.22);
+  box-shadow:0 30px 100px rgba(0,0,0,.45);
+  position:relative;
+  overflow:hidden;
+}
+
+.certificate::before{
+  content:"";
+  position:absolute;
+  inset:18px;
+  border:1px solid rgba(255,255,255,.22);
+  border-radius:24px;
+  pointer-events:none;
+}
+
+.cert-logo{
+  font-size:28px;
+  font-weight:950;
+  margin-bottom:12px;
+}
+
+.cert-logo span{
+  color:#7ddcff;
+}
+
+.cert-small{
+  color:#b9c7ff;
+  text-transform:uppercase;
+  letter-spacing:2px;
+  font-size:12px;
+}
+
+.certificate h2{
+  font-size:44px;
+  margin:28px 0 12px;
+  background:linear-gradient(90deg,#7ddcff,#b997ff,#fff);
+  -webkit-background-clip:text;
+  color:transparent;
+}
+
+.certificate p{
+  color:#dce6ff;
+  line-height:1.7;
+}
+
+.cert-line{
+  width:160px;
+  height:1px;
+  background:rgba(255,255,255,.35);
+  margin:24px auto;
+}
+
+.cert-note{
+  margin-top:24px;
+  font-size:12px;
+  opacity:.75;
+}
+
+@media(max-width:900px){
+  .cert-wrap{grid-template-columns:1fr;}
+  .certificate{padding:32px 20px;}
+  .certificate h2{font-size:34px;}
+}
 <style>
 *{
   margin:0;
@@ -627,6 +723,33 @@ footer{
     </div>
   </div>
 </section>
+<section id="certificate">
+  <div class="section-title">
+    <h2>Create Your <span class="gradient">Certificate</span></h2>
+    <p>Generate a premium AstroPulse digital keepsake certificate.</p>
+  </div>
+
+  <div class="cert-wrap">
+    <div class="cert-form">
+      <input id="certName" placeholder="Recipient name" />
+      <input id="certMessage" placeholder="Gift message" />
+      <input id="certDate" type="date" />
+      <button class="cta" onclick="createCertificate()">Generate Certificate</button>
+      <button class="secondary" onclick="downloadCertificate()">Download Certificate</button>
+    </div>
+
+    <div class="certificate" id="certificateBox">
+      <div class="cert-logo">Astro<span>Pulse</span></div>
+      <p class="cert-small">Certificate of Symbolic Star Memory</p>
+      <h2 id="certDisplayName">Your Star Name</h2>
+      <p id="certDisplayMsg">A memory has found its place in the sky.</p>
+      <div class="cert-line"></div>
+      <p>Star ID: <strong id="certStarId">AP-000000</strong></p>
+      <p>Date: <strong id="certDisplayDate">--</strong></p>
+      <p class="cert-note">Symbolic personalised astro gifting keepsake.</p>
+    </div>
+  </div>
+</section>
 
 <section>
   <div class="trust">
@@ -655,6 +778,27 @@ function generatePreview(){
   const id = "AP-" + Math.floor(100000 + Math.random() * 900000);
   const finalMessage = message ? " • " + message : "";
   result.innerText = name + "'s Astro Memory is ready • Star ID: " + id + finalMessage;
+}
+function createCertificate(){
+  const name = document.getElementById("certName").value.trim();
+  const msg = document.getElementById("certMessage").value.trim();
+  const date = document.getElementById("certDate").value;
+
+  if(!name){
+    alert("Please enter recipient name.");
+    return;
+  }
+
+  const id = "AP-" + Math.floor(100000 + Math.random() * 900000);
+
+  document.getElementById("certDisplayName").innerText = name;
+  document.getElementById("certDisplayMsg").innerText = msg || "A memory has found its place in the sky.";
+  document.getElementById("certStarId").innerText = id;
+  document.getElementById("certDisplayDate").innerText = date || new Date().toLocaleDateString();
+}
+
+function downloadCertificate(){
+  alert("Download feature needs one extra library. Next step-e ami eta real PNG download system kore debo.");
 }
 </script>
 
